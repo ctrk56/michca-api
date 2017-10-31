@@ -1,21 +1,22 @@
-package com.aws.codestar.projecttemplates.controller;
+package com.ctrk.michca.controller;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aws.codestar.SecurityUtil;
-import com.aws.codestar.adk.User;
-import com.aws.codestar.data.temp.Temporary;
-import com.aws.codestar.projecttemplates.Response;
+import com.ctrk.michca.Response;
+import com.ctrk.michca.adk.User;
+import com.ctrk.michca.data.temp.Temporary;
+import com.ctrk.michca.util.Firebase;
+import com.ctrk.michca.util.SecurityUtil;
 
 @RestController
 @RequestMapping("/")
@@ -49,10 +50,37 @@ public class HelloWorldController extends HttpServlet{
 		return new Response(result);
 	}
 	
+	@RequestMapping(value = "/passwordEncrypr", method = RequestMethod.GET)
+	public Response passwordEncrypr(@RequestParam(value = "pass") String pass) {
+		return new Response(SecurityUtil.encrypt(pass));
+	}
+
+	@RequestMapping(value = "/loginSuccessful", method = RequestMethod.GET)
+	public Response loginSuccessful() {
+		return new Response("loginSuccessful");
+	}
+
+	@RequestMapping(value = "/isValidSession", method = RequestMethod.GET)
+	public Response isValidSession(HttpServletRequest req) {
+		Object userLoggedInName = req.getSession().getAttribute("user");
+		if(null == userLoggedInName) {
+			userLoggedInName = "No User Logged In";
+		} else {
+			userLoggedInName = "User logged in is " + (String) userLoggedInName;
+		}
+		return new Response(userLoggedInName.toString());
+	}
+
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	public Response logout() {
+//		Object logOutMessage = req.getSession().getAttribute("user");
+//		Temporary.USERS_LOGGED_IN.remove(logOutMessage.toString());
+		return new Response("hi"); 
+	}
+	
 	private boolean isUserLoggedIn(HttpServletRequest req, User user) {
 		if(null != req.getSession(false)) {
 			HttpSession data = req.getSession(false);//.getAttribute("user").toString();
-			System.out.println("1111111111::::" + data.getAttributeNames());
 		}
 		boolean result = false;
 		Boolean flag = Temporary.USERS_LOGGED_IN.get(user.getName());
@@ -68,28 +96,5 @@ public class HelloWorldController extends HttpServlet{
 		session.setAttribute("user", user.getName());
 		session.setMaxInactiveInterval(30*60);
 		Temporary.USERS_LOGGED_IN.put(user.getName(), Boolean.TRUE);
-	}
-
-	@RequestMapping(value = "/passwordEncrypr", method = RequestMethod.GET)
-	public Response passwordEncrypr(@RequestParam(value = "pass") String pass) {
-		return new Response(SecurityUtil.encrypt(pass));
-	}
-
-	@RequestMapping(value = "/isValidSession", method = RequestMethod.GET)
-	public Response isValidSession(HttpServletRequest req) {
-		Object userLoggedInName = req.getSession().getAttribute("user");
-		if(null == userLoggedInName) {
-			userLoggedInName = "No User Logged In";
-		} else {
-			userLoggedInName = "User logged in is " + (String) userLoggedInName;
-		}
-		return new Response(userLoggedInName.toString());
-	}
-
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public Response logout() {
-//		Object logOutMessage = req.getSession().getAttribute("user");
-//		Temporary.USERS_LOGGED_IN.remove(logOutMessage.toString());
-		return new Response("hi"); 
 	}
 }

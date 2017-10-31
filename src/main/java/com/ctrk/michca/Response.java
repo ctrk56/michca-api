@@ -1,4 +1,4 @@
-package com.aws.codestar.projecttemplates;
+package com.ctrk.michca;
 
 /**
  * Basic POJO to contain a message.

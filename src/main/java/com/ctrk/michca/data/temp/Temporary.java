@@ -1,4 +1,4 @@
-package com.aws.codestar.data.temp;
+package com.ctrk.michca.data.temp;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,7 @@ public class Temporary {
 		USERS_LOGGED_IN = new HashMap<String, Boolean>();
 		USERS.put("mobile", new User("mobile", "iLoveCricket", true, true, true, true, AuthorityUtils.createAuthorityList("USER")));
 		USERS.put("web", new User("web", "iLikeCricket", true, true, true, true, AuthorityUtils.createAuthorityList("USER")));
-		USERS.put("ctrk", new User("ctrk", "iAmKing", true, true, true, true, AuthorityUtils.createAuthorityList("USER")));
+		USERS.put("ctrk", new User("ctrk", "iAmKing", true, true, true, true, AuthorityUtils.createAuthorityList("ADMIN")));
 	}
 	
 }

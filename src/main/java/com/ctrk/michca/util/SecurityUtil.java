@@ -1,4 +1,4 @@
-package com.aws.codestar;
+package com.ctrk.michca.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

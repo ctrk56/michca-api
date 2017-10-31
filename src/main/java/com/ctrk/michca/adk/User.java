@@ -1,5 +1,8 @@
-package com.aws.codestar.adk;
+package com.ctrk.michca.adk;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
     private Long id;
     private String name;
@@ -37,5 +40,4 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-
 }
