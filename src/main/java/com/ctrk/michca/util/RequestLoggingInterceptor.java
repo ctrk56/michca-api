@@ -6,6 +6,7 @@ import java.nio.charset.Charset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpRequest;
+import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
@@ -16,7 +17,13 @@ public class RequestLoggingInterceptor implements ClientHttpRequestInterceptor {
 
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
+        
+        request.getHeaders().setCacheControl("no-cache");
+        request.getHeaders().add("x-apikey", "59f88e22741783cb062d807f");
+        request.getHeaders().setContentType(MediaType.APPLICATION_JSON); 
+        
         ClientHttpResponse response = execution.execute(request, body);
+        
         log.info("request method: {}, request URI: {}, request headers: {}, request body: {}, response status code: {}, response headers: {}, response body: {}",
             request.getMethod(),
             request.getURI(),
@@ -25,7 +32,7 @@ public class RequestLoggingInterceptor implements ClientHttpRequestInterceptor {
             response.getStatusCode(),
             response.getHeaders(),
             response.getBody());
-
+        
         return response;
     }
 
