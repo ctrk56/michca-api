@@ -1,4 +1,4 @@
-package com.ctrk.michca.util;
+package com.ctrk.michca.interceptors;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -11,9 +11,9 @@ import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
 
-public class RequestLoggingInterceptor implements ClientHttpRequestInterceptor {
+public class RestDBInterceptor implements ClientHttpRequestInterceptor {
 
-    private final static Logger log = LoggerFactory.getLogger(RequestLoggingInterceptor.class);
+    private final static Logger log = LoggerFactory.getLogger(RestDBInterceptor.class);
 
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {

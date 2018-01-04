@@ -1,5 +1,6 @@
-package com.ctrk.michca.adk;
+package com.ctrk.michca.adk.wrapper;
 
+import com.ctrk.michca.adk.User;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
